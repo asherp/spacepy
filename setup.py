@@ -570,13 +570,14 @@ class build(_build):
             'intel': '-Bstatic -assume 2underscores -O2 -fPIC',
             'intelem': '-Bdynamic -O2 -fPIC',
             }[fcompiler]
-        if fcompiler == 'gnu':
-            if bit == 64:
-                compflags = '-m64 ' + compflags
+        # if fcompiler == 'gnu':
+        #     if bit == 64:
+        #         compflags = '-m64 ' + compflags
         if not sys.platform.startswith('win') and fcompiler == 'gnu95' \
            and not os.uname()[4].startswith('arm'):
             # Raspberry Pi doesn't have this switch and assumes 32-bit
-            compflags = '-m{0} '.format(bit) + compflags
+            # compflags = '-m{0} '.format(bit) + compflags
+            pass
         if fcompiler.startswith('intel'):
             if bit == 32:
                 compflags = '-Bstatic -assume 2underscores ' + compflags
@@ -637,8 +638,8 @@ class build(_build):
         f2py_flags = ['--fcompiler={0}'.format(fcompiler)]
         if fcompiler == 'gnu':
             f2py_flags.append('--f77flags=-fno-second-underscore,-mno-align-double')
-            if bit == 64:
-                f2py_flags[-1] += ',-m64'
+            # if bit == 64:
+            #     f2py_flags[-1] += ',-m64'
         if fcompiler == 'gnu95':
             f2py_flags.extend(['--f77flags=-std=legacy',
                                '--f90flags=-std=legacy'])
